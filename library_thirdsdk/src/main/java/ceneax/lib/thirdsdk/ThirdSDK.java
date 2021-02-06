@@ -1,5 +1,6 @@
 package ceneax.lib.thirdsdk;
 
+import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.tauth.Tencent;
 
 import java.util.ArrayList;
@@ -54,10 +55,17 @@ public class ThirdSDK {
     }
 
     // ---------- 第三方SDK对象 ----------
+    // QQ
     private static Tencent mTencent;
+    // 微信
+    private static IWXAPI mIWxAPI;
 
     public static Tencent getTencent() {
         return mTencent;
+    }
+
+    public static IWXAPI getIWxAPI() {
+        return mIWxAPI;
     }
     // ---------- 第三方SDK对象 ----------
 

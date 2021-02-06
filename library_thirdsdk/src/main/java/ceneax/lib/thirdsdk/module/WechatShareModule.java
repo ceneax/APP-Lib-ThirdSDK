@@ -2,11 +2,13 @@ package ceneax.lib.thirdsdk.module;
 
 import android.content.Context;
 
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.tauth.Tencent;
 
 import ceneax.lib.thirdsdk.enums.ModuleEnum;
 
-public class WechatShareModule implements IBaseModule<Tencent> {
+public class WechatShareModule implements IBaseModule<IWXAPI> {
 
     private final Context context;
     private final String[] args;
@@ -17,8 +19,10 @@ public class WechatShareModule implements IBaseModule<Tencent> {
     }
 
     @Override
-    public Tencent create() {
-        return Tencent.createInstance(args[0], context);
+    public IWXAPI create() {
+        IWXAPI iwxapi = WXAPIFactory.createWXAPI(context, args[0], true);
+        iwxapi.registerApp(args[0]);
+        return iwxapi;
     }
 
     @Override
