@@ -11,8 +11,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        new ThirdSDK.Builder()
-                .addModule(new QQShareModule(this, "222222"))
+        new ThirdSDK.Builder(this)
+                .addModule(new QQShareModule("1105101921"))
                 .build()
                 .init();
     }

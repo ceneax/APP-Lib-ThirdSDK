@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ceneax.lib.thirdsdk">
 
+    <!-- 适配 Android 11 -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="*/*" />
+        </intent>
+    </queries>
+
     <application>
         <uses-library
             android:name="org.apache.http.legacy"
@@ -14,8 +22,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="tencent222222" />
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+<!--                <data android:scheme="tencent222222" />-->
             </intent-filter>
         </activity>
 

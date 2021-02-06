@@ -8,16 +8,14 @@ import ceneax.lib.thirdsdk.enums.ModuleEnum;
 
 public class QQShareModule implements IBaseModule<Tencent> {
 
-    private final Context context;
     private final String[] args;
 
-    public QQShareModule(Context context, String... args) {
-        this.context = context;
+    public QQShareModule(String... args) {
         this.args = args;
     }
 
     @Override
-    public Tencent create() {
+    public Tencent create(Context context) {
         return Tencent.createInstance(args[0], context);
     }
 

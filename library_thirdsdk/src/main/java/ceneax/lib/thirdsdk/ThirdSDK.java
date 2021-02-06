@@ -1,5 +1,7 @@
 package ceneax.lib.thirdsdk;
 
+import android.content.Context;
+
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.tauth.Tencent;
 
@@ -33,7 +35,7 @@ public class ThirdSDK {
 
             switch (baseModule.getType()) {
                 case QQShare:
-                    mTencent = (Tencent) baseModule.create();
+                    mTencent = (Tencent) baseModule.create(builder.context);
                     break;
                 case WechatShare:
                     break;
@@ -42,7 +44,12 @@ public class ThirdSDK {
     }
 
     public static class Builder {
+        private Context context;
         private final List<IBaseModule<?>> moduleList = new ArrayList<>();
+
+        public Builder(Context context) {
+            this.context = context;
+        }
 
         public Builder addModule(IBaseModule<?> module) {
             moduleList.add(module);

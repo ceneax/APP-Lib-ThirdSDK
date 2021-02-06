@@ -57,7 +57,7 @@ public class Share {
 
         bundle.putString(QQShare.SHARE_TO_QQ_TITLE, builder.title);
         bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, builder.contentText);
-        bundle.putString(QQShare.SHARE_TO_QQ_APP_NAME, "应用名");
+        bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, "");
 
         ThirdSDK.getTencent().shareToQQ(builder.activity, bundle, new IUiListener() {
             @Override
