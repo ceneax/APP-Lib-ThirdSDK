@@ -10,16 +10,16 @@ import ceneax.lib.thirdsdk.enums.ModuleEnum;
 
 public class WechatShareModule implements IBaseModule<IWXAPI> {
 
-    private final String[] args;
+    private final String appId;
 
-    public WechatShareModule(String... args) {
-        this.args = args;
+    public WechatShareModule(String appId) {
+        this.appId = appId;
     }
 
     @Override
     public IWXAPI create(Context context) {
-        IWXAPI iwxapi = WXAPIFactory.createWXAPI(context, args[0], true);
-        iwxapi.registerApp(args[0]);
+        IWXAPI iwxapi = WXAPIFactory.createWXAPI(context, appId, true);
+        iwxapi.registerApp(appId);
         return iwxapi;
     }
 

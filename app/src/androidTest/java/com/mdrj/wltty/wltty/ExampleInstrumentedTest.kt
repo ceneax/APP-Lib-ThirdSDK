@@ -1,4 +1,4 @@
-package ceneax.app.demo
+package com.mdrj.wltty.wltty
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

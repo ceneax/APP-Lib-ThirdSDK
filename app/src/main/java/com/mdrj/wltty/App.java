@@ -1,9 +1,10 @@
-package ceneax.app.demo;
+package com.mdrj.wltty;
 
 import android.app.Application;
 
 import ceneax.lib.thirdsdk.ThirdSDK;
 import ceneax.lib.thirdsdk.module.QQShareModule;
+import ceneax.lib.thirdsdk.module.WechatShareModule;
 
 public class App extends Application {
 
@@ -13,6 +14,7 @@ public class App extends Application {
 
         new ThirdSDK.Builder(this)
                 .addModule(new QQShareModule("1105101921"))
+                .addModule(new WechatShareModule("wx6fff32b737311a62"))
                 .build()
                 .init();
     }

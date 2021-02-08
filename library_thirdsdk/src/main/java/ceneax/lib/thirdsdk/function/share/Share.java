@@ -5,6 +5,8 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +14,10 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.tencent.connect.share.QQShare;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXImageObject;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
@@ -19,6 +25,7 @@ import com.tencent.tauth.UiError;
 import java.util.List;
 
 import ceneax.lib.thirdsdk.ThirdSDK;
+import ceneax.lib.thirdsdk.util.BitmapUtil;
 
 /**
  * @Description: 分享 主类
@@ -39,7 +46,7 @@ public class Share {
      * 调用QQ分享
      */
     public void shareByQQ() {
-        if (checkShareParam()) {
+        if (!checkShareParam()) {
             return;
         }
 
@@ -79,10 +86,52 @@ public class Share {
     }
 
     /**
+     * 调用微信分享
+     */
+    public void shareByWechat() {
+        if (!checkShareParam()) {
+            return;
+        }
+
+        // 初始化 WXMediaMessage 对象
+        WXMediaMessage wxMediaMessage = new WXMediaMessage();
+
+        switch (builder.contentType) {
+            case ShareContentType.URL:
+                wxMediaMessage.mediaObject = new WXWebpageObject(builder.url);
+                wxMediaMessage.title = builder.title;
+                wxMediaMessage.description = builder.contentText;
+                break;
+            default:
+                Bitmap bitmap = BitmapFactory.decodeFile(builder.shareFileUri.getPath());
+                wxMediaMessage.mediaObject = new WXImageObject(bitmap);
+                // 设置缩略图
+                Bitmap thumBmp = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), true);
+                bitmap.recycle();
+                // 缩略图的二进制数据, 限制内容大小不超过 32KB
+                wxMediaMessage.thumbData = BitmapUtil.bitmap2ByteArray(thumBmp);
+                break;
+        }
+
+        // 构造一个Req
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        // 对应该请求的事务 ID，通常由 Req 发起，回复 Resp 时应填入对应事务 ID
+        req.transaction = "share";
+        req.message = wxMediaMessage;
+        // 分享到对话: SendMessageToWX.Req.WXSceneSession
+        // 分享到朋友圈: SendMessageToWX.Req.WXSceneTimeline
+        // 分享到收藏: SendMessageToWX.Req.WXSceneFavorite
+        req.scene = SendMessageToWX.Req.WXSceneSession;
+
+        // 分享
+        ThirdSDK.getIWxAPI().sendReq(req);
+    }
+
+    /**
      * 调用系统分享
      */
     public void shareBySystem() {
-        if (checkShareParam()) {
+        if (!checkShareParam()) {
             return;
         }
 
@@ -162,19 +211,19 @@ public class Share {
             return false;
         }
 
-        if (TextUtils.isEmpty(builder.contentType)) {
-            return false;
-        }
+//        if (TextUtils.isEmpty(builder.contentType)) {
+//            return false;
+//        }
 
-        if (ShareContentType.TEXT.equals(builder.contentType)) {
-            if (TextUtils.isEmpty(builder.contentText)) {
-                return false;
-            }
-        } else {
-            if (builder.shareFileUri == null) {
-                return false;
-            }
-        }
+//        if (ShareContentType.TEXT.equals(builder.contentType)) {
+//            if (TextUtils.isEmpty(builder.contentText)) {
+//                return false;
+//            }
+//        } else {
+//            if (builder.shareFileUri == null) {
+//                return false;
+//            }
+//        }
 
         return true;
     }

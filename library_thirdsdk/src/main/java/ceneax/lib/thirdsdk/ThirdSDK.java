@@ -38,6 +38,7 @@ public class ThirdSDK {
                     mTencent = (Tencent) baseModule.create(builder.context);
                     break;
                 case WechatShare:
+                    mIWxAPI = (IWXAPI) baseModule.create(builder.context);
                     break;
             }
         }
