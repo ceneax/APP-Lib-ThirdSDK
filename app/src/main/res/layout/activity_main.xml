@@ -11,22 +11,16 @@
         android:id="@+id/btShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="分享QQ"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="分享QQ URL"
+        tools:layout_editor_absoluteX="162dp"
+        tools:layout_editor_absoluteY="28dp" />
 
     <Button
         android:id="@+id/btShareWx"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="分享微信"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
+        android:text="分享微信 URL"
+        tools:layout_editor_absoluteX="162dp"
+        tools:layout_editor_absoluteY="87dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
