@@ -14,6 +14,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.tencent.connect.share.QQShare;
+import com.tencent.connect.share.QzonePublish;
+import com.tencent.connect.share.QzoneShare;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXImageObject;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
@@ -43,9 +45,12 @@ public class Share {
     }
 
     /**
-     * 调用QQ分享
+     * 调用QQ分享，默认为分享到QQ好友
      */
     public void shareByQQ() {
+        shareByQQ(ShareToEnum.ShareToQQ);
+    }
+    public void shareByQQ(ShareToEnum shareToEnum) {
         if (!checkShareParam()) {
             return;
         }
@@ -54,7 +59,10 @@ public class Share {
 
         switch (builder.contentType) {
             case ShareContentType.URL:
-                bundle.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
+                bundle.putInt(shareToEnum == ShareToEnum.ShareToQZone ?
+                                QzoneShare.SHARE_TO_QZONE_KEY_TYPE : QQShare.SHARE_TO_QQ_KEY_TYPE,
+                        shareToEnum == ShareToEnum.ShareToQZone ?
+                                QzonePublish.PUBLISH_TO_QZONE_TYPE_PUBLISHMOOD : QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
                 bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, builder.url);
                 break;
             default:
@@ -66,6 +74,7 @@ public class Share {
         bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, builder.contentText);
         bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, "");
 
+        // 回调暂时不处理
         ThirdSDK.getTencent().shareToQQ(builder.activity, bundle, new IUiListener() {
             @Override
             public void onComplete(Object o) {
@@ -86,9 +95,12 @@ public class Share {
     }
 
     /**
-     * 调用微信分享
+     * 调用微信分享，默认为分享到微信好友
      */
     public void shareByWechat() {
+        shareByWechat(ShareToEnum.ShareToWechat);
+    }
+    public void shareByWechat(ShareToEnum shareToEnum) {
         if (!checkShareParam()) {
             return;
         }

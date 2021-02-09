@@ -4,8 +4,6 @@ import android.content.Context;
 
 import com.tencent.tauth.Tencent;
 
-import ceneax.lib.thirdsdk.enums.ModuleEnum;
-
 public class QQShareModule implements IBaseModule<Tencent> {
 
     private final String appId;

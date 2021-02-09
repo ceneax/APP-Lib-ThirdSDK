@@ -1,4 +1,4 @@
-package ceneax.lib.thirdsdk.enums;
+package ceneax.lib.thirdsdk.module;
 
 public enum ModuleEnum {
 

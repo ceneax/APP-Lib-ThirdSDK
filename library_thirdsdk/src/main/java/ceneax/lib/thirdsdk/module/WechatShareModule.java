@@ -4,9 +4,6 @@ import android.content.Context;
 
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-import com.tencent.tauth.Tencent;
-
-import ceneax.lib.thirdsdk.enums.ModuleEnum;
 
 public class WechatShareModule implements IBaseModule<IWXAPI> {
 
