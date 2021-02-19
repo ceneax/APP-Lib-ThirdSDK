@@ -24,7 +24,10 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
 import ceneax.lib.thirdsdk.ThirdSDK;
 import ceneax.lib.thirdsdk.util.BitmapUtil;
@@ -45,12 +48,32 @@ public class Share {
     }
 
     /**
-     * 调用QQ分享，默认为分享到QQ好友
+     * 调用分享
      */
-    public void shareByQQ() {
-        shareByQQ(ShareToEnum.ShareToQQ);
+    public void share(ShareToEnum shareToEnum) {
+        switch (shareToEnum) {
+            case ShareBySystem:
+                shareBySystem();
+                break;
+            case ShareByQQ:
+                shareByQQ();
+                break;
+            case ShareByQZone:
+                shareByQzone();
+                break;
+            case ShareByWechat:
+                shareByWechat(0);
+                break;
+            case ShareByWechatTimeline:
+                shareByWechat(1);
+                break;
+        }
     }
-    public void shareByQQ(ShareToEnum shareToEnum) {
+
+    /**
+     * 调用QQ分享
+     */
+    private void shareByQQ() {
         if (!checkShareParam()) {
             return;
         }
@@ -59,48 +82,72 @@ public class Share {
 
         switch (builder.contentType) {
             case ShareContentType.URL:
-                bundle.putInt(shareToEnum == ShareToEnum.ShareToQZone ?
-                                QzoneShare.SHARE_TO_QZONE_KEY_TYPE : QQShare.SHARE_TO_QQ_KEY_TYPE,
-                        shareToEnum == ShareToEnum.ShareToQZone ?
-                                QzonePublish.PUBLISH_TO_QZONE_TYPE_PUBLISHMOOD : QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
+                bundle.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
                 bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, builder.url);
                 break;
             default:
                 bundle.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
+                bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, builder.shareFileUri.toString());
                 break;
         }
 
         bundle.putString(QQShare.SHARE_TO_QQ_TITLE, builder.title);
         bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, builder.contentText);
-        bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, "");
 
         // 回调暂时不处理
         ThirdSDK.getTencent().shareToQQ(builder.activity, bundle, new IUiListener() {
             @Override
-            public void onComplete(Object o) {
-            }
+            public void onComplete(Object o) { }
 
             @Override
-            public void onError(UiError uiError) {
-            }
+            public void onError(UiError uiError) { }
 
             @Override
-            public void onCancel() {
-            }
+            public void onCancel() { }
 
             @Override
-            public void onWarning(int i) {
-            }
+            public void onWarning(int i) { }
+        });
+    }
+    /**
+     * 调用QQ空间分享
+     */
+    private void shareByQzone() {
+        if (!checkShareParam()) {
+            return;
+        }
+
+        final Bundle bundle = new Bundle();
+
+        bundle.putInt(QzoneShare.SHARE_TO_QZONE_KEY_TYPE, QzoneShare.SHARE_TO_QZONE_TYPE_IMAGE_TEXT);
+        bundle.putString(QzoneShare.SHARE_TO_QQ_TITLE, builder.title);
+        bundle.putString(QzoneShare.SHARE_TO_QQ_SUMMARY, builder.contentText);
+        bundle.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL, builder.url);
+        ArrayList<String> imgList = new ArrayList<>();
+        imgList.add(builder.shareFileUri.toString());
+        bundle.putStringArrayList(QQShare.SHARE_TO_QQ_IMAGE_URL, imgList);
+
+        // 回调暂时不处理
+        ThirdSDK.getTencent().shareToQzone(builder.activity, bundle, new IUiListener() {
+            @Override
+            public void onComplete(Object o) { }
+
+            @Override
+            public void onError(UiError uiError) { }
+
+            @Override
+            public void onCancel() { }
+
+            @Override
+            public void onWarning(int i) { }
         });
     }
 
     /**
      * 调用微信分享，默认为分享到微信好友
+     * @param type 0: 分享到好友 1: 分享到朋友圈
      */
-    public void shareByWechat() {
-        shareByWechat(ShareToEnum.ShareToWechat);
-    }
-    public void shareByWechat(ShareToEnum shareToEnum) {
+    private void shareByWechat(int type) {
         if (!checkShareParam()) {
             return;
         }
@@ -133,7 +180,7 @@ public class Share {
         // 分享到对话: SendMessageToWX.Req.WXSceneSession
         // 分享到朋友圈: SendMessageToWX.Req.WXSceneTimeline
         // 分享到收藏: SendMessageToWX.Req.WXSceneFavorite
-        req.scene = SendMessageToWX.Req.WXSceneSession;
+        req.scene = type == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
 
         // 分享
         ThirdSDK.getIWxAPI().sendReq(req);
@@ -142,7 +189,7 @@ public class Share {
     /**
      * 调用系统分享
      */
-    public void shareBySystem() {
+    private void shareBySystem() {
         if (!checkShareParam()) {
             return;
         }

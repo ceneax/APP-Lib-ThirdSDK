@@ -7,13 +7,15 @@ package ceneax.lib.thirdsdk.function.share;
  */
 public enum ShareToEnum {
 
+    // 系统分享
+    ShareBySystem,
     // 分享到QQ
-    ShareToQQ,
+    ShareByQQ,
     // 分享到QQ空间
-    ShareToQZone,
+    ShareByQZone,
     // 分享到微信
-    ShareToWechat,
+    ShareByWechat,
     // 分享到微信朋友圈
-    ShareToWechatTimeline
+    ShareByWechatTimeline
 
 }
