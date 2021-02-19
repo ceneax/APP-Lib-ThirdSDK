@@ -10,40 +10,59 @@
         android:id="@+id/btShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginBottom="55dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="33dp"
         android:text="分享QQ URL"
-        app:layout_constraintBottom_toTopOf="@+id/btShareQz"
-        app:layout_constraintStart_toStartOf="@+id/btShareQz" />
+        app:layout_constraintStart_toStartOf="@+id/btShareQz"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btShareQz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="42dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="17dp"
         android:text="分享QQ空间 URL"
         app:layout_constraintBottom_toTopOf="@+id/btShareWx"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/btShareWxTl" />
 
     <Button
         android:id="@+id/btShareWx"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="23dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginBottom="13dp"
         android:text="分享微信 URL"
         app:layout_constraintBottom_toTopOf="@+id/btShareWxTl"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/btShareWxTl" />
 
     <Button
         android:id="@+id/btShareWxTl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginBottom="331dp"
+        android:layout_marginBottom="86dp"
         android:text="分享微信朋友圈 URL"
+        app:layout_constraintBottom_toTopOf="@+id/btLoginQQ"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btLoginQQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="QQ登录"
+        app:layout_constraintBottom_toTopOf="@+id/btLoginWechat"
+        app:layout_constraintStart_toStartOf="@+id/btLoginWechat" />
+
+    <Button
+        android:id="@+id/btLoginWechat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="257dp"
+        android:text="微信登录"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/btShareWx" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

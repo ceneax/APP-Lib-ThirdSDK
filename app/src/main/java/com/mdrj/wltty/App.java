@@ -3,8 +3,8 @@ package com.mdrj.wltty;
 import android.app.Application;
 
 import ceneax.lib.thirdsdk.ThirdSDK;
-import ceneax.lib.thirdsdk.module.QQShareModule;
-import ceneax.lib.thirdsdk.module.WechatShareModule;
+import ceneax.lib.thirdsdk.module.QQModule;
+import ceneax.lib.thirdsdk.module.WechatModule;
 
 public class App extends Application {
 
@@ -13,8 +13,8 @@ public class App extends Application {
         super.onCreate();
 
         new ThirdSDK.Builder(this)
-                .addModule(new QQShareModule("1105101921"))
-                .addModule(new WechatShareModule("wx6fff32b737311a62"))
+                .addModule(new QQModule("1105101921"))
+                .addModule(new WechatModule("wx6fff32b737311a62"))
                 .build()
                 .init();
     }

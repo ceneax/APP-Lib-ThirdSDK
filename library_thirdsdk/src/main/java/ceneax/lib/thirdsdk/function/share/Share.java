@@ -94,6 +94,10 @@ public class Share {
         bundle.putString(QQShare.SHARE_TO_QQ_TITLE, builder.title);
         bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, builder.contentText);
 
+        if (ThirdSDK.getTencent() == null) {
+            return;
+        }
+
         // 回调暂时不处理
         ThirdSDK.getTencent().shareToQQ(builder.activity, bundle, new IUiListener() {
             @Override
@@ -124,8 +128,12 @@ public class Share {
         bundle.putString(QzoneShare.SHARE_TO_QQ_SUMMARY, builder.contentText);
         bundle.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL, builder.url);
         ArrayList<String> imgList = new ArrayList<>();
-        imgList.add(builder.shareFileUri.toString());
+        imgList.add(builder.shareFileUri == null ? "" : builder.shareFileUri.toString());
         bundle.putStringArrayList(QQShare.SHARE_TO_QQ_IMAGE_URL, imgList);
+
+        if (ThirdSDK.getTencent() == null) {
+            return;
+        }
 
         // 回调暂时不处理
         ThirdSDK.getTencent().shareToQzone(builder.activity, bundle, new IUiListener() {
@@ -181,6 +189,10 @@ public class Share {
         // 分享到朋友圈: SendMessageToWX.Req.WXSceneTimeline
         // 分享到收藏: SendMessageToWX.Req.WXSceneFavorite
         req.scene = type == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+
+        if (ThirdSDK.getIWxAPI() == null) {
+            return;
+        }
 
         // 分享
         ThirdSDK.getIWxAPI().sendReq(req);

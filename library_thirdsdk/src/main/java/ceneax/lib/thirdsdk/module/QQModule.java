@@ -4,11 +4,11 @@ import android.content.Context;
 
 import com.tencent.tauth.Tencent;
 
-public class QQShareModule implements IBaseModule<Tencent> {
+public class QQModule implements IBaseModule<Tencent> {
 
     private final String appId;
 
-    public QQShareModule(String appId) {
+    public QQModule(String appId) {
         this.appId = appId;
     }
 
@@ -19,7 +19,7 @@ public class QQShareModule implements IBaseModule<Tencent> {
 
     @Override
     public ModuleEnum getType() {
-        return ModuleEnum.QQShare;
+        return ModuleEnum.QQ;
     }
 
 }

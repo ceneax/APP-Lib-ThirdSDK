@@ -4,6 +4,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import ceneax.lib.thirdsdk.function.login.ILoginCallback
+import ceneax.lib.thirdsdk.function.login.Login
 import ceneax.lib.thirdsdk.function.share.Share
 import ceneax.lib.thirdsdk.function.share.ShareContentType
 import ceneax.lib.thirdsdk.function.share.ShareToEnum
@@ -14,6 +16,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mBtShareWx: Button
     private lateinit var mBtShareQz: Button
     private lateinit var mBtShareWechatTl: Button
+
+    private lateinit var mBtLoginQQ: Button
+    private lateinit var mBtLoginWechat: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +33,8 @@ class MainActivity : AppCompatActivity() {
         mBtShareWx = findViewById(R.id.btShareWx)
         mBtShareQz = findViewById(R.id.btShareQz)
         mBtShareWechatTl = findViewById(R.id.btShareWxTl)
+        mBtLoginQQ = findViewById(R.id.btLoginQQ)
+        mBtLoginWechat = findViewById(R.id.btLoginWechat)
     }
 
     private fun bindEvent() {
@@ -71,6 +78,16 @@ class MainActivity : AppCompatActivity() {
                 .setContentType(ShareContentType.URL)
                 .build()
                 .share(ShareToEnum.ShareByWechatTimeline)
+        }
+
+        // QQ登录
+        mBtLoginQQ.setOnClickListener {
+            Login.QQ(this) {}
+        }
+
+        // 微信登录
+        mBtLoginWechat.setOnClickListener {
+            Login.Wechat(this, "snsapi_userinfo") {}
         }
     }
 

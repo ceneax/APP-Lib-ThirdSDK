@@ -5,11 +5,11 @@ import android.content.Context;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-public class WechatShareModule implements IBaseModule<IWXAPI> {
+public class WechatModule implements IBaseModule<IWXAPI> {
 
     private final String appId;
 
-    public WechatShareModule(String appId) {
+    public WechatModule(String appId) {
         this.appId = appId;
     }
 
@@ -22,7 +22,7 @@ public class WechatShareModule implements IBaseModule<IWXAPI> {
 
     @Override
     public ModuleEnum getType() {
-        return ModuleEnum.WechatShare;
+        return ModuleEnum.Wechat;
     }
 
 }

@@ -34,10 +34,10 @@ public class ThirdSDK {
             IBaseModule<?> baseModule = tmpList.get(i);
 
             switch (baseModule.getType()) {
-                case QQShare:
+                case QQ:
                     mTencent = (Tencent) baseModule.create(builder.context);
                     break;
-                case WechatShare:
+                case Wechat:
                     mIWxAPI = (IWXAPI) baseModule.create(builder.context);
                     break;
             }
