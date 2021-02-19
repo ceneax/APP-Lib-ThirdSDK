@@ -1,8 +1,10 @@
 package com.mdrj.wltty
 
+import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import ceneax.lib.thirdsdk.function.login.ILoginCallback
 import ceneax.lib.thirdsdk.function.login.Login
@@ -87,7 +89,7 @@ class MainActivity : AppCompatActivity() {
 
         // 微信登录
         mBtLoginWechat.setOnClickListener {
-            Login.Wechat(this, "snsapi_userinfo") {}
+            Login.wechat(this)
         }
     }
 

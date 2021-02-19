@@ -34,7 +34,7 @@ dependencies {
     implementation 'com.android.support:support-v4:24.3.1'
 
     // QQ SDK
-    implementation 'com.tencent.tauth:qqopensdk:3.52.0'
+    api 'com.tencent.tauth:qqopensdk:3.52.0'
     // 微信 SDK
-    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.6.20@aar'
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.6.20@aar'
 }

@@ -1,6 +1,7 @@
 package ceneax.lib.thirdsdk.function.login;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -37,23 +38,38 @@ public class Login {
 
         ThirdSDK.getTencent().login(activity, scope, new IUiListener() {
             @Override
-            public void onComplete(Object o) { }
+            public void onComplete(Object o) {
+                Log.e("ThirdSDK", "QQ登录 成功");
+                Object oo = o;
+            }
 
             @Override
-            public void onError(UiError uiError) { }
+            public void onError(UiError uiError) {
+                Log.e("ThirdSDK", "QQ登录 失败: " + uiError.toString());
+            }
 
             @Override
-            public void onCancel() { }
+            public void onCancel() {
+                Log.e("ThirdSDK", "QQ登录 取消");
+            }
 
             @Override
-            public void onWarning(int i) { }
+            public void onWarning(int i) {
+                Log.e("ThirdSDK", "QQ登录 警告: " + i);
+            }
         }, qrCode);
     }
 
     /**
      * 微信登录
      */
-    public static void Wechat(Activity activity, String scope, ILoginCallback loginCallback) {
+    public static void wechat(Activity activity) {
+        wechat(activity, "snsapi_userinfo");
+    }
+    /**
+     * 微信登录
+     */
+    public static void wechat(Activity activity, String scope) {
         SendAuth.Req req = new SendAuth.Req();
         req.scope = scope;
         req.state = "wechat_sdk_login_" + new Random().nextInt(10);
@@ -62,13 +78,6 @@ public class Login {
             return;
         }
 
-        ThirdSDK.getIWxAPI().handleIntent(activity.getIntent(), new IWXAPIEventHandler() {
-            @Override
-            public void onReq(BaseReq baseReq) { }
-
-            @Override
-            public void onResp(BaseResp baseResp) { }
-        });
         ThirdSDK.getIWxAPI().sendReq(req);
     }
 
