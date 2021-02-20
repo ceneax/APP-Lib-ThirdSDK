@@ -1,4 +1,4 @@
-package ceneax.lib.thirdsdk.activity;
+package com.mdrj.wltty.wxapi;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 
 import ceneax.lib.thirdsdk.ThirdSDK;
@@ -35,13 +36,18 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     public void onResp(BaseResp baseResp) {
         Bundle bundle = new Bundle();
 
+        if (!(baseResp instanceof SendAuth.Resp)) {
+            finish();
+            return;
+        }
+
         switch (baseResp.errCode) {
             // 成功
             case BaseResp.ErrCode.ERR_OK:
                 switch (baseResp.getType()) {
                     case RETURN_MSG_TYPE_LOGIN:
                         bundle.putBoolean("state", true);
-                        bundle.putString("openId", baseResp.openId);
+                        bundle.putString("openId", ((SendAuth.Resp) baseResp).code);
                         // 这里要请求get
                         break;
                     case RETURN_MSG_TYPE_SHARE:
@@ -52,11 +58,14 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             // 失败
             default:
                 bundle.putBoolean("state", false);
-                bundle.putString("msg", baseResp.errStr);
+                bundle.putString("errMsg", baseResp.errStr);
+                bundle.putInt("errCode", baseResp.errCode);
                 break;
         }
 
-        setResult(RESULT_OK, getIntent().putExtras(bundle));
+        // 发送广播
+        sendBroadcast(getIntent().putExtras(bundle));
+
         finish();
     }
 

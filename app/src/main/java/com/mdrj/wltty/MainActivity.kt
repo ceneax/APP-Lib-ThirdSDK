@@ -1,11 +1,10 @@
 package com.mdrj.wltty
 
-import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import ceneax.lib.thirdsdk.function.login.ILoginCallback
 import ceneax.lib.thirdsdk.function.login.Login
 import ceneax.lib.thirdsdk.function.share.Share
@@ -84,12 +83,28 @@ class MainActivity : AppCompatActivity() {
 
         // QQ登录
         mBtLoginQQ.setOnClickListener {
-            Login.QQ(this) {}
+            Login.QQ(this, object : ILoginCallback {
+                override fun onSuccess(openId: String?) {
+                    Toast.makeText(this@MainActivity, openId?:"null", Toast.LENGTH_LONG).show()
+                }
+
+                override fun onFail(msg: String?, code: Int) {
+                    Toast.makeText(this@MainActivity, msg?:"null", Toast.LENGTH_LONG).show()
+                }
+            })
         }
 
         // 微信登录
         mBtLoginWechat.setOnClickListener {
-            Login.wechat(this)
+            Login.wechat(this, object : ILoginCallback {
+                override fun onSuccess(openId: String?) {
+                    Toast.makeText(this@MainActivity, openId?:"null", Toast.LENGTH_LONG).show()
+                }
+
+                override fun onFail(msg: String?, code: Int) {
+                    Toast.makeText(this@MainActivity, msg?:"null", Toast.LENGTH_LONG).show()
+                }
+            })
         }
     }
 
