@@ -17,24 +17,24 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    signingConfigs {
-        debug {
-            storeFile file('E:\\Project\\Android\\Android签名keys\\wltty.keystore')
-            storePassword 'mediawoolinte'
-            keyAlias 'woolinte'
-            keyPassword 'mediawoolinte'
-            v1SigningEnabled true
-            v2SigningEnabled true
-        }
-        release {
-            storeFile file('E:\\Project\\Android\\Android签名keys\\wltty.keystore')
-            storePassword 'mediawoolinte'
-            keyAlias 'woolinte'
-            keyPassword 'mediawoolinte'
-            v1SigningEnabled true
-            v2SigningEnabled true
-        }
-    }
+//    signingConfigs {
+//        debug {
+//            storeFile file('E:\\Project\\Android\\Android签名keys\\wltty.keystore')
+//            storePassword 'mediawoolinte'
+//            keyAlias 'woolinte'
+//            keyPassword 'mediawoolinte'
+//            v1SigningEnabled true
+//            v2SigningEnabled true
+//        }
+//        release {
+//            storeFile file('E:\\Project\\Android\\Android签名keys\\wltty.keystore')
+//            storePassword 'mediawoolinte'
+//            keyAlias 'woolinte'
+//            keyPassword 'mediawoolinte'
+//            v1SigningEnabled true
+//            v2SigningEnabled true
+//        }
+//    }
 
     buildTypes {
         debug {
