@@ -1,12 +1,15 @@
 package ceneax.lib.thirdsdk;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.tauth.Tencent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ceneax.lib.thirdsdk.module.IBaseModule;
 
@@ -63,6 +66,9 @@ public class ThirdSDK {
     }
 
     // ---------- 第三方SDK对象 ----------
+    // 存储SDK初始化的参数
+    public static final Map<String, Map<String, String>> argumentMap = new HashMap<>();
+
     // QQ
     private static Tencent mTencent;
     // 微信
@@ -76,5 +82,10 @@ public class ThirdSDK {
         return mIWxAPI;
     }
     // ---------- 第三方SDK对象 ----------
+
+    public static OnWXLoginCallback onWXLoginCallback;
+    public interface OnWXLoginCallback {
+        void onFinish(Bundle bundle);
+    }
 
 }

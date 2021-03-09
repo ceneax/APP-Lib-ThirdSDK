@@ -14,7 +14,7 @@ public class App extends Application {
 
         new ThirdSDK.Builder(this)
                 .addModule(new QQModule("1105101921"))
-                .addModule(new WechatModule("wx6fff32b737311a62"))
+                .addModule(new WechatModule("wx6fff32b737311a62", "b45b7b6679bfbeef92274adf42c78d0b"))
                 .build()
                 .init();
     }

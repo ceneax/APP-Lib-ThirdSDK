@@ -37,4 +37,6 @@ dependencies {
     api 'com.tencent.tauth:qqopensdk:3.52.0'
     // 微信 SDK
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.6.20@aar'
+
+    implementation "com.squareup.okhttp3:okhttp:4.9.0"
 }

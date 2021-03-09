@@ -6,18 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.tencent.mm.opensdk.modelbase.BaseReq;
-import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
-import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
+
 
 import java.util.Random;
 
 import ceneax.lib.thirdsdk.ThirdSDK;
+import ceneax.lib.thirdsdk.bean.LoginBean;
 
 public class Login {
 
@@ -43,10 +41,16 @@ public class Login {
             return;
         }
 
+        // 未安装QQ
+        if (!ThirdSDK.getTencent().isQQInstalled(activity)) {
+            loginCallback.onFail("未安装QQ", -1);
+            return;
+        }
+
         ThirdSDK.getTencent().login(activity, scope, new IUiListener() {
             @Override
             public void onComplete(Object o) {
-                loginCallback.onSuccess("");
+                loginCallback.onSuccess(new LoginBean());
             }
 
             @Override
@@ -80,20 +84,18 @@ public class Login {
             return;
         }
 
-        // 注册广播，接收 WXEntryActivity 回调
-        activity.registerReceiver(new BroadcastReceiver() {
+        // 未安装微信
+        if (!ThirdSDK.getIWxAPI().isWXAppInstalled()) {
+            loginCallback.onFail("未安装微信", -1);
+            return;
+        }
+
+        // 接收 WXEntryActivity 回调
+        ThirdSDK.onWXLoginCallback = new ThirdSDK.OnWXLoginCallback() {
             @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent == null || !intent.getAction().equalsIgnoreCase(BROADCAST_RECEIVER_CALLBACK_ACTION)) {
-                    return;
-                }
-
-                // 取消注册广播
-                activity.unregisterReceiver(this);
-
-                Bundle bundle = intent.getExtras();
+            public void onFinish(Bundle bundle) {
                 if (bundle == null) {
-                    loginCallback.onFail("未知错误", -1);
+                    loginCallback.onFail("unknown error", -1);
                     return;
                 }
 
@@ -102,9 +104,14 @@ public class Login {
                     return;
                 }
 
-                loginCallback.onSuccess(bundle.getString("openId"));
+                loginCallback.onSuccess(new LoginBean(bundle.getString("access_token"),
+                        Integer.parseInt(bundle.getString("expires_in")),
+                        bundle.getString("refresh_token"),
+                        bundle.getString("openId"),
+                        bundle.getString("scope"),
+                        bundle.getString("unionid")));
             }
-        }, new IntentFilter(BROADCAST_RECEIVER_CALLBACK_ACTION));
+        };
 
         ThirdSDK.getIWxAPI().sendReq(req);
     }

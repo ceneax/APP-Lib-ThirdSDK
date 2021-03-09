@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import ceneax.lib.thirdsdk.ThirdSDK
+import ceneax.lib.thirdsdk.bean.LoginBean
 import ceneax.lib.thirdsdk.function.login.ILoginCallback
 import ceneax.lib.thirdsdk.function.login.Login
 import ceneax.lib.thirdsdk.function.share.Share
@@ -84,8 +86,8 @@ class MainActivity : AppCompatActivity() {
         // QQ登录
         mBtLoginQQ.setOnClickListener {
             Login.QQ(this, object : ILoginCallback {
-                override fun onSuccess(openId: String?) {
-                    Toast.makeText(this@MainActivity, openId?:"null", Toast.LENGTH_LONG).show()
+                override fun onSuccess(loginBean: LoginBean?) {
+                    Toast.makeText(this@MainActivity, loginBean?.openid, Toast.LENGTH_LONG).show()
                 }
 
                 override fun onFail(msg: String?, code: Int) {
@@ -97,8 +99,8 @@ class MainActivity : AppCompatActivity() {
         // 微信登录
         mBtLoginWechat.setOnClickListener {
             Login.wechat(this, object : ILoginCallback {
-                override fun onSuccess(openId: String?) {
-                    Toast.makeText(this@MainActivity, openId?:"null", Toast.LENGTH_LONG).show()
+                override fun onSuccess(loginBean: LoginBean?) {
+                    Toast.makeText(this@MainActivity, loginBean?.openid, Toast.LENGTH_LONG).show()
                 }
 
                 override fun onFail(msg: String?, code: Int) {
